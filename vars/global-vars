@@ -1,0 +1,3 @@
+#Glabal variables
+ansible_ssh_user=adithya
+sensu_master=192.168.44.153

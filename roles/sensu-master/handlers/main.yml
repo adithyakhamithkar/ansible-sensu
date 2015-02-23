@@ -1,0 +1,26 @@
+- name: start rabbitmq-server
+  service: name=rabbitmq-server state=started
+
+- name: restart rabbitmq-server
+  service: name=rabbitmq-server state=restarted
+
+- name: start redis-server
+  service: name=redis-server state=started
+
+- name: start sensu-server
+  service: name=sensu-server state=started
+
+- name: start sensu-client
+  service: name=sensu-client state=started
+
+- name: start sensu-api
+  service: name=sensu-api state=started
+
+- name: start uchiwa
+  service: name=uchiwa state=started
+
+- name: stop nginx
+  service: name=nginx state=stopped
+
+- name: restart nginx
+  service: name=nginx state=restarted

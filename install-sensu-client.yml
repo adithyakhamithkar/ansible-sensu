@@ -1,0 +1,6 @@
+---
+- hosts: sensu-client
+  sudo: yes
+  roles:
+  - common
+  - sensu-client

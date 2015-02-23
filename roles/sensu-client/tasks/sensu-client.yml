@@ -1,0 +1,51 @@
+---
+- name: Add the Sensu APT key
+  apt_key: url=http://repos.sensuapp.org/apt/pubkey.gpg state=present
+
+- name: Add the Sensu source to the APT source list
+  apt_repository: repo="deb http://repos.sensuapp.org/apt sensu main" state=present
+
+- name: Install Sensu
+  apt: name={{ item }} state=present
+  with_items:
+   - sensu
+   - ruby
+   - ruby-dev
+   - build-essential
+
+- name: Install sensu gem
+  gem: name=sensu-plugin state=present
+
+- name: Create directory for sensu SSL certificates
+  file: path=/etc/sensu/ssl state=directory
+
+- name: Adding RabbitMQ SSL certificates
+  template: src=cert dest=/etc/sensu/ssl/cert.pem
+
+- name: Adding RabbitMQ SSL certificates
+  template: src=key dest=/etc/sensu/ssl/key.pem
+
+- name: Adding rabbitmq.json
+  template: src=rabbitmq.j2 dest=/etc/sensu/conf.d/rabbitmq.json
+
+- name: Adding client.json
+  template: src=client.j2 dest=/etc/sensu/conf.d/client.json
+
+- name: Adding api.json
+  template: src=api.j2 dest=/etc/sensu/conf.d/api.json
+
+- name: Adding redis.json
+  template: src=redis.j2 dest=/etc/sensu/conf.d/redis.json
+
+- name: Enable the Sensu services to start automatically
+  shell: update-rc.d {{ item }} defaults
+  with_items:
+  - sensu-client
+  changed_when: False
+
+- name: Restart all services
+  service: name={{ item }} state=restarted
+  with_items:
+  - sensu-server
+  - sensu-client
+  - sensu-api

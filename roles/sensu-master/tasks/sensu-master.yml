@@ -1,0 +1,108 @@
+---
+- name: Add the RabbitMQ APT key
+  apt_key: url=http://www.rabbitmq.com/rabbitmq-signing-key-public.asc state=present
+
+- name: Add the RabbitMQ source to the APT source list
+  apt_repository: repo="deb http://www.rabbitmq.com/debian/ testing main" state=present
+
+- name: Add the Sensu APT key
+  apt_key: url=http://repos.sensuapp.org/apt/pubkey.gpg state=present
+
+- name: Add the Sensu source to the APT source list
+  apt_repository: repo="deb http://repos.sensuapp.org/apt sensu main" state=present
+
+- name: Install Sensu, RabbitMQ, Redis, Uchiwa, Postfix
+  apt: name={{ item }} state=present
+  with_items:
+   - erlang-nox
+   - rabbitmq-server
+   - redis-server
+   - sensu
+   - uchiwa
+   - postfix
+   - mailutils
+
+- name: Configure RabbitMQ
+  template: src=rabbitmq.conf dest=/etc/rabbitmq/rabbitmq.config
+
+- name: Create a RabbitMQ virtual host
+  shell: rabbitmqctl add_vhost /sensu
+  ignore_errors: True
+  register: error1
+
+- debug: var=error1
+
+- name: Create a user for Sensu
+  shell: rabbitmqctl add_user {{ rabbitmq_user }} {{ rabbitmq_password }}
+  ignore_errors: True
+  register: error2
+
+- debug: var=error2
+
+
+#- name: Create directory for RabbitMQ SSL certificates
+#  file: path=/etc/rabbitmq/ssl state=directory#
+
+#- name: Create RabbitMQ SSL certificates
+#  template: src=cacert dest=/etc/rabbitmq/ssl/cacert.pem#
+
+#- name: Create RabbitMQ SSL certificates
+#  template: src=cert dest=/etc/rabbitmq/ssl/cert.pem#
+
+#- name: Create RabbitMQ SSL certificates
+#  template: src=key dest=/etc/rabbitmq/ssl/key.pem
+
+- name: Set permissions Sensu user
+  shell: rabbitmqctl set_permissions -p /sensu {{ rabbitmq_user }} ".*" ".*" ".*"
+  changed_when: False
+
+#- name: Create directory for sensu SSL certificates
+#  file: path=/etc/sensu/ssl state=directory#
+
+#- name: Adding RabbitMQ SSL certificates
+#  template: src=cert dest=/etc/sensu/ssl/cert.pem#
+
+#- name: Adding RabbitMQ SSL certificates
+#  template: src=key dest=/etc/sensu/ssl/key.pem
+
+- name: Configuring redis
+  template: src=redis.conf dest=/etc/redis/redis.conf
+
+- name: Enable the Sensu services to start automatically
+  shell: update-rc.d {{ item }} defaults
+  with_items:
+  - rabbitmq-server
+  - redis-server
+  - sensu-server
+  - sensu-client
+  - sensu-api
+  - uchiwa
+  changed_when: False
+
+- name: Change uchinwa.json
+  template: src=uchiwa.j2 dest=/etc/sensu/uchiwa.json
+
+- name: Adding api.json
+  template: src=api.j2 dest=/etc/sensu/conf.d/api.json
+
+- name: Adding redis.json
+  template: src=redis.j2 dest=/etc/sensu/conf.d/redis.json
+
+- name: Adding client.json
+  template: src=client.j2 dest=/etc/sensu/conf.d/client.json
+
+- name: Adding rabbitmq.json
+  template: src=rabbitmq.j2 dest=/etc/sensu/conf.d/rabbitmq.json
+
+- name: Adding an email handler
+  template: src=email-handler.j2 dest=/etc/sensu/conf.d/handler_email.json
+
+- name: Restart all services
+  service: name={{ item }} state=restarted
+  with_items:
+  - rabbitmq-server
+  - redis-server
+  - sensu-server
+  - sensu-client
+  - sensu-api
+  - uchiwa

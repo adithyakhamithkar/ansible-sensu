@@ -1,0 +1,13 @@
+#Glabal variables
+[all:vars]
+ansible_ssh_user=adithya
+sensu_master=192.168.44.153
+rabbitmq_user=sensu
+rabbitmq_password=sensu
+alert_email=nkadithya31@gmail.com
+
+[sensu-master]
+sensu-master ansible_ssh_host=192.168.44.153 hostname=sensu-master
+
+[sensu-client]
+web-01 ansible_ssh_host=192.168.44.150 hostname=web-01

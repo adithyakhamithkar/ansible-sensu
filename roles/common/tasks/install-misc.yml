@@ -1,0 +1,5 @@
+- name: Install Misc packages
+  apt: name={{ item }} state=present
+  with_items:
+  - unzip
+  - git

@@ -1,0 +1,5 @@
+---
+- hostname: name={{ hostname }}
+- include: hosts.yml
+- include: motd.yml
+- include: install-misc.yml
