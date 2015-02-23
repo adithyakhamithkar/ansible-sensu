@@ -1,3 +1,0 @@
-#RabbitMQ credentials for sensu user  
-rabbitmq_user=sensu
-rabbitmq_password=sensu
