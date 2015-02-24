@@ -16,15 +16,6 @@
 - name: Install sensu gem
   gem: name=sensu-plugin state=present
 
-- name: Create directory for sensu SSL certificates
-  file: path=/etc/sensu/ssl state=directory
-
-- name: Adding RabbitMQ SSL certificates
-  template: src=cert dest=/etc/sensu/ssl/cert.pem
-
-- name: Adding RabbitMQ SSL certificates
-  template: src=key dest=/etc/sensu/ssl/key.pem
-
 - name: Adding rabbitmq.json
   template: src=rabbitmq.j2 dest=/etc/sensu/conf.d/rabbitmq.json
 

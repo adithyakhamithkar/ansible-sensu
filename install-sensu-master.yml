@@ -2,5 +2,5 @@
 - hosts: sensu-master
   sudo: yes
   roles:
-  - common
   - sensu-master
+  - common
