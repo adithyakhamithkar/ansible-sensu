@@ -1,13 +1,14 @@
 #Glabal variables
 [all:vars]
 ansible_ssh_user=
-sensu_master=
+timezone=Asia/Kolkata
+sensu_master=192.168.44.133
 rabbitmq_user=sensu
 rabbitmq_password=sensu
 alert_email=
 
 [sensu-master]
-sensu-master ansible_ssh_host=192.168.44.153 hostname=sensu-master
+sensu-master ansible_ssh_host=192.168.44.133 hostname=sensu-master
 
 [sensu-client]
-web-01 ansible_ssh_host=192.168.44.150 hostname=web-01
+web-01 ansible_ssh_host=192.168.44.132 hostname=web-01
