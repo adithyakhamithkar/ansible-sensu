@@ -7,7 +7,7 @@
     "host": "{{ sensu_master }}",
     "port": 5671,
     "vhost": "/sensu",
-    "user": "sensu",
-    "password": "sensu"
+    "user": "{{ rabbitmq_user }}",
+    "password": "{{ rabbitmq_password }}"
   }
 }

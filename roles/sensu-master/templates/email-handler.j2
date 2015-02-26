@@ -2,11 +2,7 @@
   "handlers": {
     "default": {
       "type": "pipe",
-      "command": "echo $(cat) > /tmp/mail.txt; mail -s \'Sensu Alert\' {{ alert_email }} < /tmp/mail.txt",
-      "severities": [
-        "ok",
-        "critical"
-      ]
+      "command": "mail -s 'Sensu Alert' {{ alert_email }}"
     }
   }
 }
