@@ -17,6 +17,18 @@
    - erlang-nox
    - rabbitmq-server
 
+- name: Create SSL directory for RabbitMQ
+  file: path=/etc/rabbitmq/ssl state=directory
+
+- name: Copy cert.pem to /etc/rabbitmq/ssl
+  template: src=cert.pem dest=/etc/rabbitmq/ssl/cert.pem
+
+- name: Copy cacert.pem to /etc/rabbitmq/ssl
+  template: src=cacert.pem dest=/etc/rabbitmq/ssl/cacert.pem
+
+- name: Copy key.pem to /etc/rabbitmq/ssl
+  template: src=key.pem dest=/etc/rabbitmq/ssl/key.pem
+
 - name: Configure RabbitMQ
   template: src=rabbitmq.conf dest=/etc/rabbitmq/rabbitmq.config
 
@@ -67,8 +79,20 @@
    - postfix
    - mailutils
 
+- name: Create SSL directory for Sensu
+  file: path=/etc/sensu/ssl state=directory
+
+- name: Copy cert.pem to /etc/sensu/ssl
+  template: src=cert.pem dest=/etc/sensu/ssl/cert.pem
+
+- name: Copy key.pem to /etc/sensu/ssl
+  template: src=key.pem dest=/etc/sensu/ssl/key.pem
+
 - name: Install sensu gem
-  gem: name=sensu-plugin state=present
+  gem: name={{ item }} state=present
+  with_items:
+  - mixlib-cli
+  - sensu-plugin
 
 - name: Enable the Sensu services to start automatically
   shell: update-rc.d {{ item }} defaults
@@ -102,8 +126,6 @@
 - name: Restart all services
   service: name={{ item }} state=restarted
   with_items:
-  - rabbitmq-server
-  - redis-server
   - sensu-server
   - sensu-client
   - sensu-api

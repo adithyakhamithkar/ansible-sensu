@@ -2,5 +2,5 @@
 - hosts: sensu-client
   sudo: yes
   roles:
-  - sensu-client
   - common
+  - sensu-client

@@ -2,6 +2,7 @@
   "client": {
     "name": "{{ hostname }}",
     "address": "{{ ansible_eth0["ipv4"]["address"] }}",
-    "subscriptions": [ "ALL" ]
+    "subscriptions": [ "ALL" ],
+    "safe_mode": true
   }
 }

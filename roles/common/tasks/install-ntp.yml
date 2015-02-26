@@ -1,0 +1,20 @@
+---
+- name: Install ntp
+  apt: name={{ item }} state=present
+  with_items:
+  - ntp
+
+- name: Configure ntp
+  template: src=ntp.j2 dest=/etc/ntp.conf
+
+- name: Configure timezone
+  template: src=timezone.j2 dest=/etc/timezone
+
+- name: Remove default localtime
+  shell: rm -rf /etc/localtime
+
+- name: Set local time as Asia/Kolkata
+  shell: ln -s /usr/share/zoneinfo/Asia/Kolkata /etc/localtime
+
+- name: Restart ntp
+  service: name=ntp state=restarted

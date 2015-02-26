@@ -1,5 +1,6 @@
 ---
+- hostname: name={{ hostname }}
 - include: hosts.yml
 - include: motd.yml
+- include: install-ntp.yml
 - include: install-misc.yml
-#- include: basic-check.yml
