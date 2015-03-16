@@ -2,7 +2,7 @@
     "sensu": [
         {
             "name": "Data-center-1",
-            "host": "localhost",
+            "host": "{{ ansible_eth0["ipv4"]["address"] }}",
             "ssl": false,
             "port": 4567,
             "path": "",
