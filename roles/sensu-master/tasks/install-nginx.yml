@@ -12,6 +12,3 @@
 - name: Configure Virtual host
   template: src=virtualhost.j2 dest=/etc/nginx/sites-available/default
   notify: restart nginx
-
-- name: restart nginx
-  service: name=nginx state=restarted

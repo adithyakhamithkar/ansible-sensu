@@ -1,0 +1,13 @@
+---
+- name: Install Redis
+  apt: name={{ item }} state=present
+  with_items:
+  - redis-server
+
+- name: Configuring redis
+  template: src=redis.conf dest=/etc/redis/redis.conf
+  notify: restart redis-server
+
+- name: Enable the Redis services to start automatically
+  shell: update-rc.d redis-server defaults
+  changed_when: False

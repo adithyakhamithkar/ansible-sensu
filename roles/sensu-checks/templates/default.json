@@ -36,13 +36,6 @@
             "subscribers": ["ALL"]
         },
 
-     "timezone_check": {
-                "handlers": ["default"],
-                "command": "/etc/sensu/plugins/check-timezone.sh IST",
-                "interval": 900,
-                "subscribers": ["ALL"]
-        },
-
      "ssh_check": {
                 "handlers": ["default"],
                 "command": "/opt/sensu/embedded/bin/ruby /etc/sensu/plugins/check-procs.rb -p sshd -C 1",

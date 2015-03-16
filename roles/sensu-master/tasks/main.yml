@@ -1,4 +1,7 @@
 ---
 - hostname: name={{ hostname }}
-- include: sensu-master.yml
+- include: install-rabbitmq.yml
+- include: configure-rabbitmq.yml
+- include: install-redis.yml
+- include: install-sensu.yml
 - include: install-nginx.yml

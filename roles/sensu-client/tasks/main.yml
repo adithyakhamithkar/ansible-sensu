@@ -1,3 +1,2 @@
 ---
-- include: sensu-client.yml
-- include: basic-check.yml
+- include: install-sensu.yml

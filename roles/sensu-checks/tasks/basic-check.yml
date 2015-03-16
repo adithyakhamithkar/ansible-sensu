@@ -20,12 +20,6 @@
 - name: Set +x permissions
   shell: chmod +x /etc/sensu/plugins/check-swap-percentage.sh
 
-- name: Adding check-timezone.sh
-  template: src=check-timezone.sh  dest=/etc/sensu/plugins/check-timezone.sh
-
-- name: Set +x permissions
-  shell: chmod +x /etc/sensu/plugins/check-timezone.sh
-
 - name: Restart all services
   service: name={{ item }} state=restarted
   with_items:

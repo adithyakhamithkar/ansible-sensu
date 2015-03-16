@@ -4,4 +4,4 @@
   roles:
   - common
   - sensu-master
-  - sensu-client
+  - sensu-checks
