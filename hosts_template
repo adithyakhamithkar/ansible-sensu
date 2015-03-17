@@ -2,13 +2,19 @@
 [all:vars]
 ansible_ssh_user=
 timezone=Asia/Kolkata
-sensu_master=192.168.44.133
+sensu_master=192.168.44.157
 rabbitmq_user=sensu
 rabbitmq_password=sensu
+
 alert_email=
+smtp_address=
+smtp_port=
+smtp_domain=
+smtp_username=
+smtp_password=
 
 [sensu-master]
-sensu-master ansible_ssh_host=192.168.44.133 hostname=sensu-master
+sensu-master ansible_ssh_host=192.168.44.157 hostname=sensu-master
 
 [sensu-client]
 web-01 ansible_ssh_host=192.168.44.132 hostname=web-01
