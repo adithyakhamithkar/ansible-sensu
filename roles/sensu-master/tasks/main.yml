@@ -1,5 +1,4 @@
 ---
-- hostname: name={{ hostname }}
 - include: install-rabbitmq.yml
 - include: configure-rabbitmq.yml
 - include: install-redis.yml

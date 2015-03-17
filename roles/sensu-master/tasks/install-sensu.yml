@@ -1,4 +1,10 @@
 ---
+- name: Add the Sensu APT key
+  apt_key: url=http://repos.sensuapp.org/apt/pubkey.gpg state=present
+
+- name: Add the Sensu source to the APT source list
+  apt_repository: repo="deb http://repos.sensuapp.org/apt sensu main" state=present
+
 - name: Install Sensu
   apt: name={{ item }} state=present
   with_items:
@@ -15,6 +21,8 @@
   with_items:
   - mixlib-cli
   - sensu-plugin
+  - mail
+  - timeout
 
 - name: Create SSL directory for Sensu
   file: path=/etc/sensu/ssl state=directory
@@ -56,3 +64,22 @@
 - name: Adding an email handler
   template: src=email-handler.j2 dest=/etc/sensu/conf.d/handler_email.json
   notify: restart sensu
+
+- name: Create handlers directory for Sensu
+  file: path=/etc/sensu/handlers state=directory
+
+- name: Adding mailer.rb
+  template: src=mailer.j2 dest=/etc/sensu/handlers/mailer.rb
+  notify: restart sensu
+
+- name: Adding mailer.json
+  template: src=mailer-json.j2 dest=/etc/sensu/conf.d/mailer.json
+  notify: restart sensu
+
+- name: Restart all services
+  service: name={{ item }} state=restarted
+  with_items:
+  - sensu-server
+  - sensu-client
+  - sensu-api
+  - uchiwa

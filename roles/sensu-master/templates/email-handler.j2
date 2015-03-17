@@ -2,7 +2,7 @@
   "handlers": {
     "default": {
       "type": "pipe",
-      "command": "mail -s 'Sensu Alert' {{ alert_email }}"
+      "command": "/opt/sensu/embedded/bin/ruby /etc/sensu/handlers/mailer.rb"
     }
   }
 }
