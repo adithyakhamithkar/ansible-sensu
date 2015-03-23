@@ -36,9 +36,12 @@
 - name: Enable the Sensu services to start automatically
   shell: update-rc.d {{ item }} defaults
   with_items:
+  - rabbitmq-server
+  - redis-server
   - sensu-server
   - sensu-client
   - sensu-api
+  - uchiwa
   changed_when: False
 
 - name: Change uchinwa.json

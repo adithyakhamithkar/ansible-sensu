@@ -3,7 +3,7 @@
   apt_key: url=http://repos.sensuapp.org/apt/pubkey.gpg state=present
 
 - name: Add the Sensu source to the APT source list
-  apt_repository: repo="deb http://repos.sensuapp.org/apt sensu main" state=present  
+  apt_repository: repo="deb http://repos.sensuapp.org/apt sensu main" state=present
 
 - name: Install Sensu
   apt: name={{ item }} state=present
