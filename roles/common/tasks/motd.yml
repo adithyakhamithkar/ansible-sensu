@@ -1,3 +1,27 @@
 ---
-- name: Update motd
-  template: src=motd.j2 dest=/etc/motd
+- name: Adding motd
+  template: src=motd.j2 dest=/etc/update-motd.d/motd
+
+- name: Adding 00-header
+  template: src=00-header dest=/etc/update-motd.d/00-header
+
+- name: Chmod +X
+  shell: chmod +x /etc/update-motd.d/00-header
+
+- name: Adding 10-sysinfo
+  template: src=10-sysinfo dest=/etc/update-motd.d/10-sysinfo
+
+- name: Chmod +X
+  shell: chmod +x /etc/update-motd.d/10-sysinfo
+
+- name: Adding 20-updates
+  template: src=20-updates dest=/etc/update-motd.d/20-updates
+
+- name: Chmod +X
+  shell: chmod +x /etc/update-motd.d/20-updates
+
+- name: Adding 99-footer
+  template: src=99-footer dest=/etc/update-motd.d/99-footer
+
+- name: Chmod +X
+  shell: chmod +x /etc/update-motd.d/99-footer

@@ -3,3 +3,4 @@
   with_items:
   - unzip
   - git
+  - figlet

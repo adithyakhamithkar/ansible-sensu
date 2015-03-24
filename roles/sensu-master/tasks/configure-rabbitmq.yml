@@ -16,3 +16,9 @@
 - name: Set permissions Sensu user
   shell: rabbitmqctl set_permissions -p /sensu {{ rabbitmq_user }} ".*" ".*" ".*"
   changed_when: False
+
+- name: Enable RabbitMQ management
+  shell: rabbitmq-plugins enable rabbitmq_management
+
+- name: Restart RabbitMQ
+  service: name=rabbitmq-server state=restarted

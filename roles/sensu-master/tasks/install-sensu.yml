@@ -46,38 +46,33 @@
 
 - name: Change uchinwa.json
   template: src=uchiwa.j2 dest=/etc/sensu/uchiwa.json
-  notify: restart sensu
 
 - name: Adding api.json
   template: src=api.j2 dest=/etc/sensu/conf.d/api.json
-  notify: restart sensu
 
 - name: Adding redis.json
   template: src=redis.j2 dest=/etc/sensu/conf.d/redis.json
-  notify: restart sensu
 
 - name: Adding client.json
   template: src=client.j2 dest=/etc/sensu/conf.d/client.json
-  notify: restart sensu
 
 - name: Adding rabbitmq.json
   template: src=rabbitmq.j2 dest=/etc/sensu/conf.d/rabbitmq.json
-  notify: restart sensu
 
 - name: Adding an email handler
   template: src=email-handler.j2 dest=/etc/sensu/conf.d/handler_email.json
-  notify: restart sensu
 
 - name: Create handlers directory for Sensu
   file: path=/etc/sensu/handlers state=directory
 
 - name: Adding mailer.rb
   template: src=mailer.j2 dest=/etc/sensu/handlers/mailer.rb
-  notify: restart sensu
 
 - name: Adding mailer.json
   template: src=mailer-json.j2 dest=/etc/sensu/conf.d/mailer.json
-  notify: restart sensu
+
+- name: Adding default.json
+  template: src=default.json dest=/etc/sensu/conf.d/default.json
 
 - name: Restart all services
   service: name={{ item }} state=restarted

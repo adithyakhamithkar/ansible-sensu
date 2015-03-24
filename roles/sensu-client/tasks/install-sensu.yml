@@ -31,9 +31,7 @@
 - name: Enable the Sensu services to start automatically
   shell: update-rc.d {{ item }} defaults
   with_items:
-  - sensu-server
   - sensu-client
-  - sensu-api
   changed_when: False
 
 - name: Adding api.json

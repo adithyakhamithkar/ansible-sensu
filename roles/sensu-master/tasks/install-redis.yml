@@ -6,7 +6,6 @@
 
 - name: Configuring redis
   template: src=redis.conf dest=/etc/redis/redis.conf
-  notify: restart redis-server
 
 - name: Enable the Redis services to start automatically
   shell: update-rc.d redis-server defaults
@@ -17,3 +16,6 @@
 
 - name: Sysctl configuration
   shell: sysctl vm.overcommit_memory=1
+
+- name: Restart Redis
+  service: name=redis-server state=restarted

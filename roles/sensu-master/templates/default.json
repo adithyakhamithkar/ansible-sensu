@@ -11,7 +11,7 @@
       "disk_check_root": {
             "handlers": ["default"],
             "command": "/opt/sensu/embedded/bin/ruby /etc/sensu/plugins/check-disk.rb -L /dev/xvda,/dev/sda,/dev/xvde,/dev/sde,/dev/vda -w 80 -c 85",
-            "interval": 120,
+            "interval": 10,
             "subscribers": ["ALL"]
        },
 

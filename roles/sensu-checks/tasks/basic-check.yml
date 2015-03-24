@@ -1,7 +1,4 @@
 ---
-- name: Adding default.json
-  template: src=default.json dest=/etc/sensu/conf.d/default.json
-
 - name: Adding check-disk.rb
   template: src=check-disk.rb dest=/etc/sensu/plugins/check-disk.rb
 
@@ -19,10 +16,3 @@
 
 - name: Set +x permissions
   shell: chmod +x /etc/sensu/plugins/check-swap-percentage.sh
-
-- name: Restart all services
-  service: name={{ item }} state=restarted
-  with_items:
-  - sensu-server
-  - sensu-client
-  - sensu-api
