@@ -24,6 +24,12 @@
   - mail
   - timeout
 
+- name: Installing more gems
+  shell: /opt/sensu/embedded/bin/gem install {{ item }}
+  with_items:
+  - mail
+  - timeout
+
 - name: Create SSL directory for Sensu
   file: path=/etc/sensu/ssl state=directory
 
